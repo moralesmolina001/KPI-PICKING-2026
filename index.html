@@ -4,9 +4,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Picking 2026</title>
-<script src="./Dashboard Picking 2026_files/xlsx.full.min.js.descarga"></script>
-<script src="./Dashboard Picking 2026_files/chart.umd.min.js.descarga"></script>
-<link href="./Dashboard Picking 2026_files/css2" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0a0e1a;
@@ -123,7 +123,7 @@
   /* ── FILTROS MULTI-SELECT ── */
   .filters-bar {
     position:relative;z-index:10;
-    display:flex;gap:12px;padding:20px 32px 0;
+    display:none;gap:12px;padding:20px 32px 0;
     flex-wrap:wrap;align-items:flex-start;
   }
   .filter-label {
@@ -262,23 +262,23 @@
       <p>DASHBOARD OPERACIONAL · 2026 · <span style="color:var(--accent1);font-weight:500">created by Yaely Morales</span></p>
     </div>
   </div>
-  <div class="file-badge show" id="fileBadge">✓ <span id="fileName">Indicadores picking 2026.xlsx</span></div>
+  <div class="file-badge" id="fileBadge">✓ <span id="fileName">Sincronizando...</span></div>
 </header>
 
-<div class="upload-zone loaded" id="uploadZone" onclick="document.getElementById(&#39;fileInput&#39;).click()">
+<div class="upload-zone" id="uploadZone" onclick="document.getElementById(&#39;fileInput&#39;).click()">
   <div class="upload-info">
-    <div class="upload-icon">📊</div>
+    <div class="upload-icon">🔄</div>
     <div class="upload-text">
-      <h3>Cargar / Recargar archivo de datos</h3>
-      <p>Arrastra aquí o haz clic · Compatible: .xlsx, .xls, .csv · Funciona offline</p>
+      <h3>Conectando con Google Drive...</h3>
+      <p>Espera un momento mientras importamos las métricas en tiempo real.</p>
     </div>
   </div>
-  <button class="upload-btn" onclick="event.stopPropagation();document.getElementById(&#39;fileInput&#39;).click()">⬆ Seleccionar archivo</button>
+  <button class="upload-btn" onclick="event.stopPropagation();document.getElementById(&#39;fileInput&#39;).click()">⬆ Forzar archivo local</button>
   <input type="file" id="fileInput" accept=".xlsx,.xls,.csv">
 </div>
 
 <!-- BARRA PUBLICAR -->
-<div id="publishBar" class="show">
+<div id="publishBar">
   <div class="publish-info">
     <div class="publish-icon">🚀</div>
     <div class="publish-text">
@@ -290,7 +290,7 @@
 </div>
 
 <!-- FILTERS -->
-<div class="filters-bar" id="filtersBar" style="display: flex;">
+<div class="filters-bar" id="filtersBar">
   <span class="filter-label" style="padding-top:22px">Filtrar por:</span>
   <div class="filter-group">
     <span class="filter-group-label">Mes</span>
@@ -303,7 +303,7 @@
           <button onclick="selectAll(&#39;msMes&#39;)">Todos</button>
           <button onclick="clearAll(&#39;msMes&#39;)">Limpiar</button>
         </div>
-        <div class="dropdown-options" id="optsMes"><div class="dropdown-option"><input type="checkbox" id="msMes_opt_0" value="enero" checked=""><label for="msMes_opt_0">enero</label></div><div class="dropdown-option"><input type="checkbox" id="msMes_opt_1" value="febrero" checked=""><label for="msMes_opt_1">febrero</label></div><div class="dropdown-option"><input type="checkbox" id="msMes_opt_2" value="marzo" checked=""><label for="msMes_opt_2">marzo</label></div><div class="dropdown-option"><input type="checkbox" id="msMes_opt_3" value="abril" checked=""><label for="msMes_opt_3">abril</label></div><div class="dropdown-option"><input type="checkbox" id="msMes_opt_4" value="mayo" checked=""><label for="msMes_opt_4">mayo</label></div><div class="dropdown-option"><input type="checkbox" id="msMes_opt_5" value="junio" checked=""><label for="msMes_opt_5">junio</label></div></div>
+        <div class="dropdown-options" id="optsMes"></div>
       </div>
     </div>
   </div>
@@ -318,7 +318,7 @@
           <button onclick="selectAll(&#39;msCedis&#39;)">Todos</button>
           <button onclick="clearAll(&#39;msCedis&#39;)">Limpiar</button>
         </div>
-        <div class="dropdown-options" id="optsCedis"><div class="dropdown-option"><input type="checkbox" id="msCedis_opt_0" value="LPZ" checked=""><label for="msCedis_opt_0">LPZ</label></div><div class="dropdown-option"><input type="checkbox" id="msCedis_opt_1" value="SCZ" checked=""><label for="msCedis_opt_1">SCZ</label></div></div>
+        <div class="dropdown-options" id="optsCedis"></div>
       </div>
     </div>
   </div>
@@ -333,7 +333,7 @@
           <button onclick="selectAll(&#39;msPrioridad&#39;)">Todos</button>
           <button onclick="clearAll(&#39;msPrioridad&#39;)">Limpiar</button>
         </div>
-        <div class="dropdown-options" id="optsPrioridad"><div class="dropdown-option"><input type="checkbox" id="msPrioridad_opt_0" value="1" checked=""><label for="msPrioridad_opt_0">1</label></div><div class="dropdown-option"><input type="checkbox" id="msPrioridad_opt_1" value="2" checked=""><label for="msPrioridad_opt_1">2</label></div><div class="dropdown-option"><input type="checkbox" id="msPrioridad_opt_2" value="3" checked=""><label for="msPrioridad_opt_2">3</label></div><div class="dropdown-option"><input type="checkbox" id="msPrioridad_opt_3" value="4" checked=""><label for="msPrioridad_opt_3">4</label></div></div>
+        <div class="dropdown-options" id="optsPrioridad"></div>
       </div>
     </div>
   </div>
@@ -348,39 +348,39 @@
           <button onclick="selectAll(&#39;msDia&#39;)">Todos</button>
           <button onclick="clearAll(&#39;msDia&#39;)">Limpiar</button>
         </div>
-        <div class="dropdown-options" id="optsDia"><div class="dropdown-option"><input type="checkbox" id="msDia_opt_0" value="lunes" checked=""><label for="msDia_opt_0">lunes</label></div><div class="dropdown-option"><input type="checkbox" id="msDia_opt_1" value="martes" checked=""><label for="msDia_opt_1">martes</label></div><div class="dropdown-option"><input type="checkbox" id="msDia_opt_2" value="miércoles" checked=""><label for="msDia_opt_2">miércoles</label></div><div class="dropdown-option"><input type="checkbox" id="msDia_opt_3" value="jueves" checked=""><label for="msDia_opt_3">jueves</label></div><div class="dropdown-option"><input type="checkbox" id="msDia_opt_4" value="viernes" checked=""><label for="msDia_opt_4">viernes</label></div><div class="dropdown-option"><input type="checkbox" id="msDia_opt_5" value="sábado" checked=""><label for="msDia_opt_5">sábado</label></div></div>
+        <div class="dropdown-options" id="optsDia"></div>
       </div>
     </div>
   </div>
 </div>
 
 <main>
-  <div id="emptyState" style="display: none;">
+  <div id="emptyState">
     <div class="empty-icon">📂</div>
-    <h2>Carga tu archivo Excel para comenzar</h2>
+    <h2>Cargando base de datos remota...</h2>
     <p>El dashboard se generará automáticamente con tus datos de picking 2026</p>
   </div>
-  <div id="dashboard" style="display: block;">
+  <div id="dashboard">
     <div class="kpi-grid">
       <div class="kpi-card k1">
         <span class="kpi-icon">🏆</span>
         <div class="kpi-label">Mejor Picker del Período</div>
-        <div class="kpi-value" id="kpiTop1" style="font-size:clamp(1rem,3.5vw,2.7rem);word-break:break-word;white-space:normal;line-height:1.15;letter-spacing:-0.5px">DULCE SALVATIERRA</div>
-        <div class="kpi-sub" id="kpiTop1Lines">91.106 líneas totales</div>
-        <div class="progress-bar"><div class="progress-fill" id="kpiTop1Bar" style="width: 100%;"></div></div>
+        <div class="kpi-value" id="kpiTop1" style="font-size:clamp(1rem,3.5vw,2.7rem);word-break:break-word;white-space:normal;line-height:1.15;letter-spacing:-0.5px">—</div>
+        <div class="kpi-sub" id="kpiTop1Lines">0 líneas totales</div>
+        <div class="progress-bar"><div class="progress-fill" id="kpiTop1Bar" style="width: 0%;"></div></div>
       </div>
       <div class="kpi-card k2">
         <span class="kpi-icon">📋</span>
         <div class="kpi-label">Filas Pickeadas en SRA</div>
-        <div class="kpi-value" id="kpiFilas">1.227.915</div>
+        <div class="kpi-value" id="kpiFilas">0</div>
         <div class="kpi-sub" id="kpiFilasSub">filas procesadas por el sistema</div>
       </div>
       <div class="kpi-card k3">
         <span class="kpi-icon">✅</span>
         <div class="kpi-label">Efectividad de Picking</div>
-        <div class="kpi-value" id="kpiPct">40.9%</div>
-        <div class="kpi-sub" id="kpiPctSub">1.227.915 / 3.001.974</div>
-        <div class="progress-bar"><div class="progress-fill" id="kpiPctBar" style="width: 40.9036%;"></div></div>
+        <div class="kpi-value" id="kpiPct">0%</div>
+        <div class="kpi-sub" id="kpiPctSub">0 / 0</div>
+        <div class="progress-bar"><div class="progress-fill" id="kpiPctBar" style="width: 0%;"></div></div>
       </div>
     </div>
     <div class="charts-grid row-3" style="margin-bottom:16px">
@@ -390,8 +390,8 @@
           <div class="chart-subtitle">Proporción pickeadas vs cargadas</div>
         </div></div>
         <div id="waffleWrapSCZ" style="width:100%;position:relative">
-          <canvas id="chartWaffleSCZ" height="260" width="260" style="height: 260px; width: 260px;"></canvas>
-          <div id="waffleLabelSCZ" style="text-align:center;padding:8px 0 2px;font-family:&#39;Roboto Mono&#39;,monospace;font-size:0.75rem;color:#94a3b8"><strong style="color:#00d4ff">840.478</strong> pickeadas &nbsp;/&nbsp; <span style="color:#64748b">2.169.604 cargadas</span></div>
+          <canvas id="chartWaffleSCZ" height="260" width="260"></canvas>
+          <div id="waffleLabelSCZ" style="text-align:center;padding:8px 0 2px;font-family:&#39;Roboto Mono&#39;,monospace;font-size:0.75rem;color:#94a3b8"></div>
         </div>
       </div>
       <div class="chart-card">
@@ -400,8 +400,8 @@
           <div class="chart-subtitle">Proporción pickeadas vs cargadas</div>
         </div></div>
         <div id="waffleWrapLPZ" style="width:100%;position:relative">
-          <canvas id="chartWaffleLPZ" height="260" width="260" style="height: 260px; width: 260px;"></canvas>
-          <div id="waffleLabelLPZ" style="text-align:center;padding:8px 0 2px;font-family:&#39;Roboto Mono&#39;,monospace;font-size:0.75rem;color:#94a3b8"><strong style="color:#7c3aed">387.437</strong> pickeadas &nbsp;/&nbsp; <span style="color:#64748b">832.370 cargadas</span></div>
+          <canvas id="chartWaffleLPZ" height="260" width="260"></canvas>
+          <div id="waffleLabelLPZ" style="text-align:center;padding:8px 0 2px;font-family:&#39;Roboto Mono&#39;,monospace;font-size:0.75rem;color:#94a3b8"></div>
         </div>
       </div>
       <div class="chart-card">
@@ -409,7 +409,7 @@
           <div class="chart-title"><span style="background:var(--accent3)"></span>Producción por Área</div>
           <div class="chart-subtitle">% de líneas picking por área</div>
         </div></div>
-        <div class="canvas-wrap" style="height:280px"><canvas id="chartAreas" height="280" style="display: block; box-sizing: border-box; height: 280px; width: 364px;" width="364"></canvas></div>
+        <div class="canvas-wrap" style="height:280px"><canvas id="chartAreas" height="280"></canvas></div>
       </div>
     </div>
     <div class="charts-grid row-2" style="margin-bottom:16px">
@@ -418,14 +418,14 @@
           <div class="chart-title"><span style="background:var(--accent4)"></span>Tendencia de Líneas por Mes</div>
           <div class="chart-subtitle">Evolución mensual del picking</div>
         </div></div>
-        <div class="canvas-wrap" style="height:240px"><canvas id="chartTendencia" height="240" style="display: block; box-sizing: border-box; height: 240px; width: 579px;" width="579"></canvas></div>
+        <div class="canvas-wrap" style="height:240px"><canvas id="chartTendencia" height="240"></canvas></div>
       </div>
       <div class="chart-card">
         <div class="chart-header"><div>
           <div class="chart-title"><span style="background:var(--accent5)"></span>Top 8 Pickers — Líneas Totales</div>
           <div class="chart-subtitle">Ranking por Nombres(2)</div>
         </div></div>
-        <div class="canvas-wrap" style="height:240px"><canvas id="chartTopPickers" height="240" style="display: block; box-sizing: border-box; height: 240px; width: 579px;" width="579"></canvas></div>
+        <div class="canvas-wrap" style="height:240px"><canvas id="chartTopPickers" height="240"></canvas></div>
       </div>
     </div>
     <div class="charts-grid row-3">
@@ -434,21 +434,21 @@
           <div class="chart-title"><span style="background:var(--accent2)"></span>Efectividad SRA por CEDIS</div>
           <div class="chart-subtitle">% pickeado / cargado</div>
         </div></div>
-        <div class="canvas-wrap" style="height:220px"><canvas id="chartEfectividad" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 364px;" width="364"></canvas></div>
+        <div class="canvas-wrap" style="height:220px"><canvas id="chartEfectividad" height="220"></canvas></div>
       </div>
       <div class="chart-card">
         <div class="chart-header"><div>
           <div class="chart-title"><span style="background:var(--accent1)"></span>Filas por Día de Semana</div>
           <div class="chart-subtitle">Distribución semanal de filas</div>
         </div></div>
-        <div class="canvas-wrap" style="height:220px"><canvas id="chartDias" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 364px;" width="364"></canvas></div>
+        <div class="canvas-wrap" style="height:220px"><canvas id="chartDias" height="220"></canvas></div>
       </div>
       <div class="chart-card">
         <div class="chart-header"><div>
           <div class="chart-title"><span style="background:var(--accent3)"></span>Líneas vs Unidades por Área</div>
           <div class="chart-subtitle">Eficiencia por área operativa</div>
         </div></div>
-        <div class="canvas-wrap" style="height:220px"><canvas id="chartLineasUnidades" height="220" style="display: block; box-sizing: border-box; height: 220px; width: 364px;" width="364"></canvas></div>
+        <div class="canvas-wrap" style="height:220px"><canvas id="chartLineasUnidades" height="220"></canvas></div>
       </div>
     </div>
   </div>
@@ -466,6 +466,45 @@ const FILTER_CFG = {
   msPrioridad: { placeholder:'Todas las prioridades',  optsId:'optsPrioridad' },
   msDia:       { placeholder:'Todos los días',         optsId:'optsDia'       },
 };
+
+// Enlace de Google Drive directo para la descarga del XLSX
+const GOOGLE_DRIVE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2xRHLemWKcQ-GVF4lUFPQ7lz451QhZDCIfya459v9klfLl8rl7794CyUfD3EhBw/pub?output=xlsx";
+
+/* ═══════════════════════ AUTO-FETCH FROM GOOGLE DRIVE ═══════════════════════ */
+async function cargarDesdeGoogleDrive() {
+  const zoneText = document.querySelector('.upload-text h3');
+  const zoneSub = document.querySelector('.upload-text p');
+  
+  try {
+    const response = await fetch(GOOGLE_DRIVE_URL);
+    if (!response.ok) throw new Error("No se pudo conectar con el servidor de Google Sheets.");
+    
+    const buffer = await response.arrayBuffer();
+    const wb = XLSX.read(new Uint8Array(buffer), { type: 'array', cellDates: true });
+    
+    procesarLibroExcel(wb);
+    
+    // Actualizar interfaz con estado de éxito
+    document.getElementById('uploadZone').classList.add('loaded');
+    if(zoneText) zoneText.textContent = "✅ Sincronizado con Google Drive";
+    if(zoneSub) zoneSub.textContent = "Datos cargados directamente desde la nube en tiempo real.";
+    document.getElementById('fileName').textContent = "Google Sheets (En vivo)";
+    document.getElementById('fileBadge').classList.add('show');
+    
+  } catch (err) {
+    console.error("Error cargando Drive:", err);
+    if(zoneText) zoneText.textContent = "⚠️ Error de conexión remota";
+    if(zoneSub) zoneSub.textContent = "No pudimos traer los datos automáticamente. Sube el archivo de forma manual abajo.";
+    document.getElementById('emptyState').innerHTML = `
+      <div class="empty-icon">❌</div>
+      <h2>No se pudo conectar a Google Drive</h2>
+      <p>Por favor, arrastra o selecciona tu archivo Excel manualmente en la zona superior.</p>
+    `;
+  }
+}
+
+// Ejecutar la sincronización automática al abrir la página
+window.addEventListener('load', cargarDesdeGoogleDrive);
 
 /* ═══════════════════════ MULTI-SELECT ═══════════════════════ */
 document.addEventListener('click', e => {
@@ -530,29 +569,35 @@ function processFile(file) {
   reader.onload=e=>{
     try {
       const wb=XLSX.read(new Uint8Array(e.target.result),{type:'array',cellDates:true});
-      rawPicking=[];rawSRA=[];rawAreas=[];rawWMS=[];
-      wb.SheetNames.forEach(name=>{
-        const rows=XLSX.utils.sheet_to_json(wb.Sheets[name],{defval:''});
-        const n=name.toLowerCase();
-        if(n.includes('picking')||n.includes('productividad')) rawPicking=rows;
-        else if(n.includes('sra'))  rawSRA=rows;
-        else if(n.includes('area')) rawAreas=rows;
-        else if(n.includes('wms'))  rawWMS=rows;
-      });
-      if(rawPicking.length===0&&wb.SheetNames.length>0)
-        rawPicking=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});
-
+      procesarLibroExcel(wb);
+      
       zone.classList.add('loaded');
       document.getElementById('fileName').textContent=file.name;
       document.getElementById('fileBadge').classList.add('show');
-      buildFilters(); applyFilters();
-      document.getElementById('filtersBar').style.display='flex';
-      document.getElementById('emptyState').style.display='none';
-      document.getElementById('dashboard').style.display='block';
-      document.getElementById('publishBar').classList.add('show'); // ← mostrar barra publicar
     } catch(err){alert('Error al leer el archivo: '+err.message);}
   };
   reader.readAsArrayBuffer(file);
+}
+
+// Separación de lógica para poder procesar tanto archivos de Drive como locales
+function procesarLibroExcel(wb) {
+  rawPicking=[];rawSRA=[];rawAreas=[];rawWMS=[];
+  wb.SheetNames.forEach(name=>{
+    const rows=XLSX.utils.sheet_to_json(wb.Sheets[name],{defval:''});
+    const n=name.toLowerCase();
+    if(n.includes('picking')||n.includes('productividad')) rawPicking=rows;
+    else if(n.includes('sra'))  rawSRA=rows;
+    else if(n.includes('area')) rawAreas=rows;
+    else if(n.includes('wms'))  rawWMS=rows;
+  });
+  if(rawPicking.length===0&&wb.SheetNames.length>0)
+    rawPicking=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});
+
+  buildFilters(); applyFilters();
+  document.getElementById('filtersBar').style.display='flex';
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  document.getElementById('publishBar').classList.add('show'); 
 }
 
 /* ═══════════════════════ DESCARGAR VERSIÓN PÚBLICA ═══════════════════════ */
@@ -563,18 +608,14 @@ function descargarVersionPublica() {
 
   try {
     const datos = JSON.stringify({ picking: rawPicking, sra: rawSRA, areas: rawAreas, wms: rawWMS });
-
-    // Leer el HTML actual como texto
     const htmlActual = document.documentElement.outerHTML;
 
-    // Reemplazar la línea de variables vacías por los datos incrustados
     const htmlPublico = htmlActual.replace(
       'let rawPicking=[], rawSRA=[], rawAreas=[], rawWMS=[];',
       `/* DATOS INCRUSTADOS */
 const _D=${datos};
 let rawPicking=_D.picking, rawSRA=_D.sra, rawAreas=_D.areas, rawWMS=_D.wms;`
     ).replace(
-      // Ocultar la zona de carga y el botón publicar en la versión pública
       'id="uploadZone"',
       'id="uploadZone" style="display:none"'
     ).replace(
@@ -582,7 +623,6 @@ let rawPicking=_D.picking, rawSRA=_D.sra, rawAreas=_D.areas, rawWMS=_D.wms;`
       'id="publishBar" style="display:none"'
     ) + `
 <script>
-// Auto-iniciar dashboard con datos incrustados
 window.addEventListener('load', function() {
   if(rawPicking.length > 0) {
     document.getElementById('filtersBar').style.display='flex';
@@ -593,7 +633,6 @@ window.addEventListener('load', function() {
 });
 <\/script>`;
 
-    // Crear y descargar el archivo
     const blob = new Blob([htmlPublico], { type: 'text/html;charset=utf-8' });
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement('a');
