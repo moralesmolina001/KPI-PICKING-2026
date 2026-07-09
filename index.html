@@ -366,7 +366,7 @@
                 <div class="chart-title"><span style="background:var(--accent2)"></span>Efectividad SRA</div>
                 <div class="chart-subtitle">% pickeado por CEDIS</div>
               </div></div>
-              <div class="canvas-wrap"><canvas id="chartEfectividad"></canvas></div>
+              <div class="canvas-wrap" style="height:220px"><canvas id="chartEfectividad" height="220"></canvas></div>
             </div>
             
             <div class="chart-card">
@@ -374,7 +374,7 @@
                 <div class="chart-title"><span style="background:var(--accent1)"></span>Filas por Día</div>
                 <div class="chart-subtitle">Distribución semanal</div>
               </div></div>
-              <div class="canvas-wrap"><canvas id="chartDias"></canvas></div>
+              <div class="canvas-wrap" style="height:220px"><canvas id="chartDias" height="220"></canvas></div>
             </div>
           </div>
         </div>
@@ -390,6 +390,7 @@
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpwcXNyaml0d21iY3NxeHp5cGlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0MzkwMTUsImV4cCI6MjA5OTAxNTAxNX0.M4PUDceJf1rztNkLk8Yx_Mt1XmkWLo-B0Z7eAkmgYL4';
     const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
+    // URL ACTUALIZADA
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxQOWU2PYVaOvG8ogURiWIizAc3L4ACYlb0yV2dXQpym9lxwzpLh59LbohKaSYYM0vz0Q/exec";
 
     // ============================================================
@@ -438,7 +439,7 @@
         hasLoadedData = false;
     });
 
-    /* ═══════════════════════ FETCH DE DATOS SEGUROS ═══════════════════════ */
+    /* ═══════════════════════ FETCH DE DATOS SEGUROS (MÉTODO GET) ═══════════════════════ */
     let rawPicking=[], rawSRA=[], rawAreas=[], rawWMS=[];
     let filteredPicking=[], filteredSRA=[];
     const charts={};
@@ -452,13 +453,14 @@
 
         document.getElementById('fileBadge').innerHTML = "⏳ Extrayendo datos...";
         
-        // CORRECCIÓN: Petición simplificada sin headers estrictos para evitar el bloqueo del navegador
-        const response = await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            body: JSON.stringify({ token: session.access_token })
+        // Petición por método GET mapeando el token directamente en la URL para omitir pre-flight blocks de CORS
+        const fetchUrl = `${APPS_SCRIPT_URL}?token=${session.access_token}`;
+        const response = await fetch(fetchUrl, {
+            method: 'GET',
+            mode: 'cors'
         });
 
-        if (!response.ok) throw new Error("Error en la conexión con el servidor (CORS o Autenticación fallida).");
+        if (!response.ok) throw new Error(`Error en el servidor de Google (${response.status})`);
         
         const jsonRes = await response.json();
         if (jsonRes.error) throw new Error(jsonRes.error);
@@ -468,7 +470,7 @@
         rawAreas = jsonRes.areas || [];
         rawWMS = jsonRes.wms || [];
 
-        if(rawPicking.length === 0) throw new Error("La base de datos de Picking está vacía o mal configurada.");
+        if(rawPicking.length === 0 && rawSRA.length === 0) throw new Error("La base de datos está vacía.");
 
         buildFilters(); applyFilters();
         
@@ -602,7 +604,7 @@
     }
 
     function renderTopPickers(){
-      const pMap={}; filteredPicking.forEach(r=>{const n=r['Nombres (2)']||r['Nombre (s)']||'SIN NOMBRE';pMap[n]=(pMap[n]||0)+parseNum(r['Lineas']||0);}); const sorted=Object.entries(pMap).sort((a,b)=>b[1]-a[1]).slice(0,8);
+      const pMap={}; filteredPicking.forEach(r=>{const n=r['Nombres (2)']||r['Nombre (s)']||'SIN NOMBRE'; pMap[n]=(pMap[n]||0)+parseNum(r['Lineas']||0); }); const sorted=Object.entries(pMap).sort((a,b)=>b[1]-a[1]).slice(0,8);
       makeChart('chartTopPickers',{type:'bar',data:{labels:sorted.map(x=>x[0].split(' ')[0]),datasets:[{label:'Líneas',data:sorted.map(x=>x[1]),backgroundColor:sorted.map((_,i)=>COLORS[i%COLORS.length]+'cc'),borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{tooltip:defaultTooltip,legend:{display:false}},scales:{x:defaultScales.x,y:{ticks:{color:'#94a3b8',font:{size:9,family:"'Roboto Mono'"}},grid:{color:gridColor}}}}});
     }
 
