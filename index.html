@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Picking 2026</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- LIBRERÍA DE SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -190,11 +191,13 @@
 </head>
 <body>
 
+<!-- PANTALLA 1: LOADING SUPABASE -->
 <div id="auth-loading" style="position:fixed;inset:0;background:var(--bg);z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;">
     <div style="width:40px;height:40px;border:4px solid var(--surface2);border-top-color:var(--accent1);border-radius:50%;animation:spin 1s linear infinite;"></div>
     <p style="margin-top:16px;color:var(--text-dim);font-family:'Roboto Mono';font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;">Verificando Sesión...</p>
 </div>
 
+<!-- PANTALLA 2: LOGIN OSCURO -->
 <div id="login-wrapper" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:40;align-items:center;justify-content:center;padding:20px;">
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;width:100%;max-width:400px;box-shadow:0 10px 40px #000000aa;">
         <div style="text-align:center;margin-bottom:24px;">
@@ -221,6 +224,7 @@
     </div>
 </div>
 
+<!-- CONTENEDOR PRINCIPAL -->
 <div id="app-wrapper">
     <header>
       <div class="header-left">
@@ -236,6 +240,7 @@
       </div>
     </header>
 
+    <!-- FILTERS -->
     <div class="filters-bar" id="filtersBar">
       <span class="filter-label">Filtros:</span>
       <div class="filter-group">
@@ -288,6 +293,7 @@
       </div>
       
       <div id="dashboard">
+        <!-- KPIS -->
         <div class="kpi-grid">
           <div class="kpi-card k1">
             <span class="kpi-icon">🏆</span>
@@ -311,6 +317,7 @@
           </div>
         </div>
 
+        <!-- CHARTS -->
         <div class="charts-container">
           <div class="chart-row">
             <div class="chart-card">
@@ -366,7 +373,7 @@
                 <div class="chart-title"><span style="background:var(--accent2)"></span>Efectividad SRA</div>
                 <div class="chart-subtitle">% pickeado por CEDIS</div>
               </div></div>
-              <div class="canvas-wrap" style="height:220px"><canvas id="chartEfectividad" height="220"></canvas></div>
+              <div class="canvas-wrap"><canvas id="chartEfectividad"></canvas></div>
             </div>
             
             <div class="chart-card">
@@ -374,7 +381,7 @@
                 <div class="chart-title"><span style="background:var(--accent1)"></span>Filas por Día</div>
                 <div class="chart-subtitle">Distribución semanal</div>
               </div></div>
-              <div class="canvas-wrap" style="height:220px"><canvas id="chartDias" height="220"></canvas></div>
+              <div class="canvas-wrap"><canvas id="chartDias"></canvas></div>
             </div>
           </div>
         </div>
@@ -391,7 +398,7 @@
     const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     // URL ACTUALIZADA
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxQOWU2PYVaOvG8ogURiWIizAc3L4ACYlb0yV2dXQpym9lxwzpLh59LbohKaSYYM0vz0Q/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzja2Nhj0yFYO125sEsnnXs6oUHDT8_Jbyhw71phzeUYy2HD_ucuTbVNZims_2kXHkxnw/exec";
 
     // ============================================================
     // 2. LÓGICA DE AUTENTICACIÓN
